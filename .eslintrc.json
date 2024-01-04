@@ -1,3 +1,41 @@
 {
-  "extends": "next/core-web-vitals"
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": [
+        "eslint:recommended",
+        "plugin:@next/next/recommended",
+        "standard-with-typescript",
+        "plugin:react/recommended",
+        "prettier"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+       "ecmaFeatures": {
+         "jsx": true
+       },
+      "ecmaVersion": "latest",
+      "sourceType": "module"
+    },
+    "plugins": [
+        "@typescript-eslint",
+        "react"
+    ],
+    "rules": {
+      "react/react-in-jsx-scope": "off",
+      "react/prop-types": "off",
+      "react/jsx-props-no-spreading": "off",
+      "no-useless-catch": "off",
+      "@typescript-eslint/ban-types": "off",
+      "@typescript-eslint/no-unused-vars": "warn",
+      "@typescript-eslint/explicit-function-return-type": "off", // Turn this on to enforce function return type
+      "@typescript-eslint/consistent-type-definitions": "warn", // Turn this on to enforce 'interface' over 'type'
+      "@typescript-eslint/no-non-null-assertion": "off"
+    },
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
+    }
 }
