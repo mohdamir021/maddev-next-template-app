@@ -1,4 +1,3 @@
-import BarcodeScanner from "@/components/BarcodeScanner";
 import Head from "next/head";
 import { useState } from "react";
 
@@ -14,7 +13,6 @@ export default function Home() {
       <main>
         <div>
           <h1>ESlint & Prettier Libraries & Dependecies Branch</h1>
-          <BarcodeScanner />
         </div>
       </main>
     </>
