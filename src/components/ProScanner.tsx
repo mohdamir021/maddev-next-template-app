@@ -8,11 +8,19 @@ import {
   Text,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
+import { IoMdVolumeHigh, IoMdVolumeOff } from "react-icons/io";
 import { Html5Qrcode } from "html5-qrcode";
 
 const ProScanner = () => {
   const [result, setResult] = useState<any>(null);
   const [scanner, setScanner] = useState<any>();
+  const [sound, setSound] = useState<boolean>(false);
+
+  // play sound on success
+  const playSound = () => {
+    var audio = document.getElementById("success_beep") as HTMLAudioElement;
+    if (sound) audio.play().then().catch();
+  };
 
   const config = { fps: 5, qrbox: { width: 250, height: 250 } };
   const scanSuccess = (text: any, result: any) => {
@@ -24,9 +32,8 @@ const ProScanner = () => {
     });
     console.log("1: ", text);
     console.log("2: ", result);
-    // play sound on success
-    var audio = document.getElementById("success_beep") as HTMLAudioElement;
-    audio.play().then().catch();
+    //play
+    playSound();
   };
   const scanError = (error: any) => {
     console.log(error);
@@ -68,12 +75,14 @@ const ProScanner = () => {
       <Button mx={1} colorScheme="gray" onClick={() => setResult(null)}>
         Clear
       </Button>
+      <Button
+        mx={1}
+        colorScheme={sound ? "orange" : "gray"}
+        onClick={() => setSound(!sound)}
+      >
+        {sound ? <IoMdVolumeHigh /> : <IoMdVolumeOff />}
+      </Button>
       <br />
-      {/* {result !== null ? (
-        <div>Success: {result}</div>
-      ) : (
-        <div id="reader" style={{ width: "600px" }}></div>
-      )} */}
       <Box id="reader" boxSize={"full"} maxH={"600px"} maxW={"600px"}></Box>
       {result !== null && (
         <Card bgColor={"whitesmoke"} mx={2} my={1} maxW={"600px"}>
