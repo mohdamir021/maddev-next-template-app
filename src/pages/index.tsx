@@ -1,6 +1,13 @@
+import ImageCustomUploader from "@/components/image-custom-uploader";
+import ImageUploader from "@/components/image-uploader";
+import { Flex, Text } from "@chakra-ui/react";
+import { Switch } from "@chakra-ui/switch";
 import Head from "next/head";
+import { useState } from "react";
 
 export default function Home() {
+  const [isCustom, setIsCustom] = useState<boolean>(false);
+
   return (
     <>
       <Head>
@@ -12,6 +19,16 @@ export default function Home() {
       <main>
         <div>
           <h1>ESlint & Prettier Libraries & Dependecies Branch</h1>
+          <Flex>
+            <Text mr={3}>Custom : </Text>
+            <Switch
+              isChecked={isCustom}
+              onChange={() => {
+                setIsCustom(!isCustom);
+              }}
+            />
+          </Flex>
+          {isCustom ? <ImageCustomUploader /> : <ImageUploader />}
         </div>
       </main>
     </>
