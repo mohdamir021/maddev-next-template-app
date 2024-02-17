@@ -1,9 +1,14 @@
 import { TableComponent } from "@/components/ui/table/table";
-import { Image } from "@chakra-ui/react";
+import { Button, Image } from "@chakra-ui/react";
 import Head from "next/head";
 import SampleData from "@/store/json/data-with-image.json";
+import { useExcelJS } from "@/components/hook/excel-util";
 
 export default function Home() {
+  const handleExport = () => {
+    useExcelJS();
+  };
+
   return (
     <>
       <Head>
@@ -16,6 +21,7 @@ export default function Home() {
         <div>
           <h1>ExcelJS Library Experimental Start Here</h1>
         </div>
+        <Button onClick={handleExport}>Export</Button>
         <TableComponent
           data={SampleData.map((data) => ({
             Name: data?.Name,
