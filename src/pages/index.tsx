@@ -2,7 +2,7 @@ import { TableComponent } from "@/components/ui/table/table";
 import { Button, Image } from "@chakra-ui/react";
 import Head from "next/head";
 import SampleData from "@/store/json/data-with-image.json";
-import { useExcelJS } from "@/components/hook/excel-util";
+import { useExcelJS } from "@/components/experimental/excel-util";
 
 export default function Home() {
   const handleExport = () => {

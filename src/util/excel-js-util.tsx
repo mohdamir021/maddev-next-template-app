@@ -1,53 +1,25 @@
 import ExcelJS from "exceljs";
 import SampleData from "@/store/json/data-with-image.json";
 
-export const useExcelJS = () => {
+//
+export const useExcelJS = ({
+  columns,
+  data,
+}: {
+  data: any[];
+  columns?: string[];
+}) => {
   // Initialization
   const workbook = new ExcelJS.Workbook();
-
-  const sheet = workbook.addWorksheet("Sheet Midnight");
-
+  const sheet = workbook.addWorksheet("");
   sheet.properties.defaultRowHeight = 80;
 
-  // Header Setup - Style
-  sheet.getRow(1).border = {
-    top: { style: "thick", color: { argb: "FFFF0000" } },
-    left: { style: "thick", color: { argb: "000000FF" } },
-    bottom: { style: "thick", color: { argb: "F08080" } },
-    right: { style: "thick", color: { argb: "FF00FF00" } },
-  };
-
-  sheet.getRow(1).fill = {
-    type: "pattern",
-    pattern: "darkVertical",
-    fgColor: { argb: "FFFF00" },
-  };
-
-  sheet.getRow(1).font = {
-    name: "Comic Sans MS",
-    family: 4,
-    size: 16,
-    bold: true,
-  };
-
   // Header Setup - Column value
-  sheet.columns = [
-    {
-      header: "Name",
-      key: "name",
-      width: 30,
-    },
-    {
-      header: "Age",
-      key: "age",
-      width: 15,
-    },
-    {
-      header: "Waifu",
-      key: "waifu",
-      width: 20,
-    },
-  ];
+  sheet.columns = Object.keys(data[0]).map((colName, index) => ({
+    header: columns !== undefined ? columns[index] : colName,
+    key: colName,
+    width: 20,
+  }));
 
   // Populating Data - Add rows - normal data only
   // SampleData?.map((data) => {
@@ -83,11 +55,11 @@ export const useExcelJS = () => {
        * and “ext” key(to define the height and width).
        */
       sheet.addImage(imageId2, {
-        tl: { col: 2, row: rowNumber },
+        tl: { col: 2, row: rowNumber + 0.2 },
         ext: { width: 100, height: 100 },
       });
       sheet.addImage(imageId2, {
-        tl: { col: 2 + 1, row: Number(rowNumber) },
+        tl: { col: 2 + 1, row: rowNumber + 0.2 },
         ext: { width: 100, height: 100 },
       });
 
@@ -99,13 +71,14 @@ export const useExcelJS = () => {
     })
   );
 
+  // After the data has been populated can be manipulated here
   promise
     .then(() => {
       // const priceCol = sheet.getColumn(5);
 
       // // iterate over all current cells in this column
       // priceCol.eachCell((cell) => {
-      //   const cellValue = sheet.getCell(cell?.address).value;
+      //   const cellValue = Number(sheet.getCell(cell?.address).value) ?? 0;
       //   // add a condition to set styling
       //   if (cellValue > 50 && cellValue < 1000) {
       //     sheet.getCell(cell?.address).fill = {
@@ -115,6 +88,31 @@ export const useExcelJS = () => {
       //     };
       //   }
       // });
+      // Styling
+      sheet.getRow(1).eachCell((cell) => {
+        sheet.getCell(cell?.address).fill = {
+          type: "pattern",
+          pattern: "solid",
+          fgColor: { argb: "FF0000" },
+        };
+        sheet.getCell(cell?.address).border = {
+          top: { style: "medium", color: { argb: "21231D" } },
+          left: { style: "medium", color: { argb: "21231D" } },
+          bottom: { style: "medium", color: { argb: "21231D" } },
+          right: { style: "medium", color: { argb: "21231D" } },
+        };
+        sheet.getCell(cell?.address).fill = {
+          type: "pattern",
+          pattern: "darkVertical",
+          fgColor: { argb: "FFFF00" },
+        };
+        sheet.getCell(cell?.address).font = {
+          name: "Comic Sans MS",
+          family: 4,
+          size: 16,
+          bold: true,
+        };
+      });
 
       // Final - Export excel file
       sheet.columns[3].width = 20;
@@ -158,9 +156,9 @@ export const useExcelJS = () => {
 // Outside method
 const toDataURL = async (url: any) => {
   const promise = new Promise((resolve, reject) => {
-    var xhr = new XMLHttpRequest();
+    const xhr = new XMLHttpRequest();
     xhr.onload = function () {
-      var reader = new FileReader();
+      const reader = new FileReader();
       reader.readAsDataURL(xhr.response);
       reader.onloadend = function () {
         resolve({ base64Url: reader.result });
