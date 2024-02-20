@@ -83,6 +83,7 @@ export const useExcelJS = () => {
        * And, in the next step, we pass it to the sheet.addImage() method with the “tl” key(column and row)
        * and “ext” key(to define the height and width).
        */
+      console.log(imageId2);
       sheet.addImage(imageId2, {
         tl: { col: 2, row: rowNumber + 0.2 },
         ext: { width: 100, height: 100 },
