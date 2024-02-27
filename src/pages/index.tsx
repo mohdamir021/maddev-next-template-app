@@ -1,6 +1,27 @@
 import Head from "next/head";
+import axios from "axios";
+import { useState } from "react";
 
 export default function Home() {
+  const [base64Url, setBase64Url] = useState({});
+
+  const fileUrl =
+    "https://cors-anywhere.herokuapp.com/" +
+    "https://jpm-helpdesk-staging.46b54bd0071786b5632c9c2a0b20ad83.r2.cloudflarestorage.com/3/private/Ticket/16/m4njp7bZQs8h3Em.jpg?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=64b7a128df37476c53be1cb439304ace%2F20240220%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240220T001959Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Signature=b3feeaabf6d404cc22e98ab7b507126a4905361f6bedf19773c63d6a432b8ba2";
+
+  axios
+    .get(fileUrl, { responseType: "arraybuffer" })
+    .then((response: any) => {
+      const base64Image =
+        `data:${response.headers["content-type"]};base64,` +
+        Buffer.from(response.data).toString("base64");
+      setBase64Url(base64Image);
+      console.log('<img src="' + base64Image + '"/>');
+    })
+    .catch((error: any) => {
+      console.log(error);
+    });
+
   return (
     <>
       <Head>
@@ -12,6 +33,9 @@ export default function Home() {
       <main>
         <div>
           <h1>ESlint & Prettier Libraries & Dependecies Branch</h1>
+          {base64Url !== undefined && (
+            <img style={{ width: "200px" }} src={base64Url} />
+          )}
         </div>
       </main>
     </>
