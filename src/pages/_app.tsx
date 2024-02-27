@@ -4,7 +4,7 @@ import type { NextPage } from "next";
 import type { AppProps } from "next/app";
 // import { ReactQueryDevtools } from "@tanstack/react-query-devtools"; // OPTIONAL
 import Head from "next/head";
-import { ChakraProvider } from "@chakra-ui/react";
+import Providers from "@/loaders/providers";
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -24,7 +24,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
         <meta name="description" content="html5qr test" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </Head>
-      <ChakraProvider>{getLayout(<Component {...pageProps} />)}</ChakraProvider>
+      <Providers>{getLayout(<Component {...pageProps} />)}</Providers>
     </>
   );
 }
