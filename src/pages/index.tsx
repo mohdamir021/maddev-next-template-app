@@ -1,3 +1,4 @@
+import TestRenders from "@/components/others/test";
 import Head from "next/head";
 
 export default function Home() {
@@ -12,6 +13,7 @@ export default function Home() {
       <main>
         <div>
           <h1>ESlint & Prettier Libraries & Dependecies Branch</h1>
+          <TestRenders />
         </div>
       </main>
     </>
