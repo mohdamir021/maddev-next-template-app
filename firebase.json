@@ -1,7 +1,10 @@
 {
   "hosting": {
-    "site": "maddev-next-qr",
     "public": "out",
-    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
   }
 }
